@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
+using System.Linq;
 using System.Web;
 using System.Web.Http;
 using System.Web.Http.ModelBinding;
@@ -64,6 +65,14 @@ namespace Book_Store_Backend.Controllers
                 HasRegistered = externalLogin == null,
                 LoginProvider = externalLogin != null ? externalLogin.LoginProvider : null
             };
+        }
+        // GET api/Account/
+        [Authorize(Roles ="Admin")]
+        [Route("")]
+        public List<UserAdminViewModel> GetUserList()
+        {
+            List<UserAdminViewModel> users = UserManager.Users.ToList().Select(x => new UserAdminViewModel(x)).ToList();
+            return users;
         }
 
         // POST api/Account/Logout
