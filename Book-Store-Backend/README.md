@@ -37,14 +37,14 @@ Add-Migrations <migration name>
 	- Authentication
 	
 		- Testing route
-			GET api/values/1
+			GET /api/values/1
 		- Registration
-			POST api/Account/Register (FORM URL ENCODED)
+			POST /api/Account/Register (FORM URL ENCODED)
 			{Email: "",
 			Password: "",
 			ConfirmPassword: "",}
 		- Login
-			POST api/Token (FORM URL ENCODED)
+			POST /Token (FORM URL ENCODED)
 			{
 				grant_type:"password",
 				username: "",
