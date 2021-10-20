@@ -41,7 +41,7 @@ namespace Book_Store_Backend.Models
         public string Email { get; set; }
         public bool isActive{get; set;}
 
-        public UserAdminViewModel(ApplicationUser user = null)
+        public UserAdminViewModel(ApplicationUser user)
         {
             this.Id = user.Id;
             this.UserName = user.UserName;

@@ -34,12 +34,6 @@ namespace Book_Store_Backend
                 RequireLowercase = true,
                 RequireUppercase = true,
             };
-            manager.UserLockoutEnabledByDefault = true;
-            manager.MaxFailedAccessAttemptsBeforeLockout = 5;
-
-            // if you want to lock out indefinitely 200 years should be enough
-            manager.DefaultAccountLockoutTimeSpan = System.TimeSpan.FromDays(365 * 200);
-
             var dataProtectionProvider = options.DataProtectionProvider;
             if (dataProtectionProvider != null)
             {

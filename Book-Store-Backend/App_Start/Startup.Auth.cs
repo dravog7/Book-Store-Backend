@@ -33,11 +33,10 @@ namespace Book_Store_Backend
 
             // Configure the application for OAuth based flow
             PublicClientId = "self";
-            var Provider = new ApplicationOAuthProvider(PublicClientId);
             OAuthOptions = new OAuthAuthorizationServerOptions
             {
                 TokenEndpointPath = new PathString("/Token"),
-                Provider = Provider,
+                Provider = new ApplicationOAuthProvider(PublicClientId),
                 AuthorizeEndpointPath = new PathString("/api/Account/ExternalLogin"),
                 AccessTokenExpireTimeSpan = TimeSpan.FromDays(14),
                 // In production mode set AllowInsecureHttp = false
