@@ -81,8 +81,9 @@ namespace Book_Store_Backend.Controllers
         {
             try
             {
-                await UserManager.SetLockoutEnabledAsync(id, true);
-                await UserManager.SetLockoutEndDateAsync(id, System.DateTimeOffset.MaxValue);
+                ApplicationUser user = (from u in UserManager.Users where u.Id == id select u).First();
+                user.isActive = false;
+                await UserManager.UpdateAsync(user);
                 return Ok();
             }
             catch (Exception)
@@ -97,7 +98,9 @@ namespace Book_Store_Backend.Controllers
         {
             try
             {
-                await UserManager.SetLockoutEnabledAsync(id, false);
+                ApplicationUser user = (from u in UserManager.Users where u.Id == id select u).First();
+                user.isActive = true;
+                await UserManager.UpdateAsync(user);
                 return Ok();
             }
             catch (Exception)

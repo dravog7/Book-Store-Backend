@@ -38,6 +38,11 @@ namespace Book_Store_Backend.Providers
                 context.SetError("invalid_grant", "The user name or password is incorrect.");
                 return;
             }
+            if (!user.isActive)
+            {
+                context.SetError("inactive", "The user is inactive!");
+                return;
+            }
             ClaimsIdentity oAuthIdentity = await user.GenerateUserIdentityAsync(userManager,
                OAuthDefaults.AuthenticationType);
             ClaimsIdentity cookiesIdentity = await user.GenerateUserIdentityAsync(userManager,
