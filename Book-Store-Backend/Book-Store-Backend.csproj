@@ -215,6 +215,10 @@
     <Compile Include="Migrations\202110190649411_Identity.Designer.cs">
       <DependentUpon>202110190649411_Identity.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202110191617379_userIsActive.cs" />
+    <Compile Include="Migrations\202110191617379_userIsActive.Designer.cs">
+      <DependentUpon>202110191617379_userIsActive.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -316,6 +320,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202110190649411_Identity.resx">
       <DependentUpon>202110190649411_Identity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202110191617379_userIsActive.resx">
+      <DependentUpon>202110191617379_userIsActive.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -39,14 +39,14 @@ namespace Book_Store_Backend.Models
         public string Id { get; set; }
         public string UserName { get; set; }
         public string Email { get; set; }
-        public bool Locked{get; set;}
+        public bool isActive{get; set;}
 
         public UserAdminViewModel(ApplicationUser user = null)
         {
             this.Id = user.Id;
             this.UserName = user.UserName;
             this.Email = user.Email;
-            this.Locked = user.LockoutEnabled;
+            this.isActive = user.isActive;
         }
     }
 

@@ -74,7 +74,37 @@ namespace Book_Store_Backend.Controllers
             List<UserAdminViewModel> users = UserManager.Users.ToList().Select(x => new UserAdminViewModel(x)).ToList();
             return users;
         }
-
+        //GET api/Account/{id}/Disable
+        [Authorize(Roles = "Admin")]
+        [Route("{id}/Disable")]
+        public async Task<IHttpActionResult> DisableUser(string id)
+        {
+            try
+            {
+                await UserManager.SetLockoutEnabledAsync(id, true);
+                await UserManager.SetLockoutEndDateAsync(id, System.DateTimeOffset.MaxValue);
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return InternalServerError();
+            }
+        }
+        //GET api/Account/{id}/Enable
+        [Authorize(Roles = "Admin")]
+        [Route("{id}/Enable")]
+        public async Task<IHttpActionResult> EnableUser(string id)
+        {
+            try
+            {
+                await UserManager.SetLockoutEnabledAsync(id, false);
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return InternalServerError();
+            }
+        }
         // POST api/Account/Logout
         [Route("Logout")]
         public IHttpActionResult Logout()
@@ -273,7 +303,7 @@ namespace Book_Store_Backend.Controllers
                 ClaimsIdentity cookieIdentity = await user.GenerateUserIdentityAsync(UserManager,
                     CookieAuthenticationDefaults.AuthenticationType);
 
-                AuthenticationProperties properties = ApplicationOAuthProvider.CreateProperties(user.UserName);
+                AuthenticationProperties properties = ApplicationOAuthProvider.CreateProperties(UserManager,user);
                 Authentication.SignIn(properties, oAuthIdentity, cookieIdentity);
             }
             else
