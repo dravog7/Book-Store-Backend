@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
+using System.Linq;
 using System.Web;
 using System.Web.Http;
 using System.Web.Http.ModelBinding;
@@ -65,7 +66,48 @@ namespace Book_Store_Backend.Controllers
                 LoginProvider = externalLogin != null ? externalLogin.LoginProvider : null
             };
         }
-
+        // GET api/Account/
+        [Authorize(Roles ="Admin")]
+        [Route("")]
+        public List<UserAdminViewModel> GetUserList()
+        {
+            List<UserAdminViewModel> users = UserManager.Users.ToList().Select(x => new UserAdminViewModel(x)).ToList();
+            return users;
+        }
+        //GET api/Account/{id}/Disable
+        [Authorize(Roles = "Admin")]
+        [Route("{id}/Disable")]
+        public async Task<IHttpActionResult> DisableUser(string id)
+        {
+            try
+            {
+                ApplicationUser user = (from u in UserManager.Users where u.Id == id select u).First();
+                user.isActive = false;
+                await UserManager.UpdateAsync(user);
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return InternalServerError();
+            }
+        }
+        //GET api/Account/{id}/Enable
+        [Authorize(Roles = "Admin")]
+        [Route("{id}/Enable")]
+        public async Task<IHttpActionResult> EnableUser(string id)
+        {
+            try
+            {
+                ApplicationUser user = (from u in UserManager.Users where u.Id == id select u).First();
+                user.isActive = true;
+                await UserManager.UpdateAsync(user);
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return InternalServerError();
+            }
+        }
         // POST api/Account/Logout
         [Route("Logout")]
         public IHttpActionResult Logout()
@@ -264,7 +306,7 @@ namespace Book_Store_Backend.Controllers
                 ClaimsIdentity cookieIdentity = await user.GenerateUserIdentityAsync(UserManager,
                     CookieAuthenticationDefaults.AuthenticationType);
 
-                AuthenticationProperties properties = ApplicationOAuthProvider.CreateProperties(user.UserName);
+                AuthenticationProperties properties = ApplicationOAuthProvider.CreateProperties(UserManager,user);
                 Authentication.SignIn(properties, oAuthIdentity, cookieIdentity);
             }
             else
