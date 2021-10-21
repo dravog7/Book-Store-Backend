@@ -12,16 +12,16 @@ namespace Book_Store_Backend.Migrations
                 c => new
                     {
                         BookId = c.Int(nullable: false, identity: true),
-                        CategoryId = c.Int(),
                         Title = c.String(maxLength: 100),
-                        ISBN = c.Long(),
+                        ISBN = c.String(maxLength: 50),
                         Year = c.Int(),
                         Price = c.Double(),
                         Description = c.String(maxLength: 500),
-                        Position = c.Double(),
-                        Status = c.Boolean(),
-                        Image = c.String(maxLength: 50),
-                        createdAt = c.DateTime(),
+                        Position = c.Double(nullable: false),
+                        Status = c.Boolean(nullable: false),
+                        Image = c.String(maxLength: 200),
+                        createdAt = c.DateTime(nullable: false,defaultValueSql:"getutcdate()"),
+                        CategoryId = c.Int(),
                     })
                 .PrimaryKey(t => t.BookId)
                 .ForeignKey("dbo.Category", t => t.CategoryId)
@@ -34,10 +34,10 @@ namespace Book_Store_Backend.Migrations
                         CategoryId = c.Int(nullable: false, identity: true),
                         CategoryName = c.String(maxLength: 100),
                         Description = c.String(maxLength: 500),
-                        Image = c.String(maxLength: 50),
-                        Status = c.Boolean(),
-                        Position = c.Double(),
-                        CreatedAt = c.DateTime(),
+                        Image = c.String(maxLength: 200),
+                        Status = c.Boolean(nullable: false),
+                        Position = c.Double(nullable: false),
+                        CreatedAt = c.DateTime(nullable: false, defaultValueSql: "getutcdate()"),
                     })
                 .PrimaryKey(t => t.CategoryId);
             

@@ -17,9 +17,9 @@ namespace Book_Store_Backend.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: api/Categories
-        public IQueryable<Category> GetCategories()
+        public List<Category> GetCategories()
         {
-            return db.Categories;
+            return db.Categories.ToList();
         }
 
         // GET: api/Categories/5
