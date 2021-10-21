@@ -9,6 +9,7 @@ namespace Book_Store_Backend.Models
     // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit https://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
     public class ApplicationUser : IdentityUser
     {
+        public bool isActive { get; set; } = true;
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager, string authenticationType)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
@@ -30,8 +31,8 @@ namespace Book_Store_Backend.Models
             return new ApplicationDbContext();
         }
 
-        public System.Data.Entity.DbSet<Book_Store_Backend.Models.Book> Books { get; set; }
+        public System.Data.Entity.DbSet<Book> Books { get; set; }
 
-        public System.Data.Entity.DbSet<Book_Store_Backend.Models.Category> Categories { get; set; }
+        public System.Data.Entity.DbSet<Category> Categories { get; set; }
     }
 }
