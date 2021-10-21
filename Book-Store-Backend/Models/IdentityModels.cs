@@ -29,5 +29,9 @@ namespace Book_Store_Backend.Models
         {
             return new ApplicationDbContext();
         }
+
+        public System.Data.Entity.DbSet<Book_Store_Backend.Models.Book> Books { get; set; }
+
+        public System.Data.Entity.DbSet<Book_Store_Backend.Models.Category> Categories { get; set; }
     }
 }

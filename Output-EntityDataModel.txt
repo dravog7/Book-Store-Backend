@@ -1,0 +1,3 @@
+﻿Generated model file: Category.cs.
+Loading metadata from the database took 00:00:00.5660428.
+Generating the model took 00:00:01.0152813.
