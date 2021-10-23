@@ -25,7 +25,6 @@ namespace Book_Store_Backend.Models
             : base("DefaultConnection", throwIfV1Schema: false)
         {
         }
-
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
@@ -34,5 +33,7 @@ namespace Book_Store_Backend.Models
         public System.Data.Entity.DbSet<Book> Books { get; set; }
 
         public System.Data.Entity.DbSet<Category> Categories { get; set; }
+
+        //public System.Data.Entity.DbSet<WishList> WishList { get; set; }
     }
 }
