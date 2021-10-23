@@ -49,7 +49,7 @@ namespace Book_Store_Backend.Controllers
                 return BadRequest();
             }
 
-            db.Entry(book).State = EntityState.Modified;
+            db.Entry(book).State = System.Data.Entity.EntityState.Modified;
 
             try
             {
