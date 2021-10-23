@@ -34,6 +34,6 @@ namespace Book_Store_Backend.Models
 
         public System.Data.Entity.DbSet<Category> Categories { get; set; }
 
-        //public System.Data.Entity.DbSet<WishList> WishList { get; set; }
+        public System.Data.Entity.DbSet<WishList> WishList { get; set; }
     }
 }

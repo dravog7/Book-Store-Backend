@@ -1,5 +1,6 @@
 namespace Book_Store_Backend.Models
 {
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
@@ -11,6 +12,10 @@ namespace Book_Store_Backend.Models
     [Table("Book")]
     public partial class Book
     {
+        public Book()
+        {
+            WishLists = new HashSet<WishList>();
+        }
         public int BookId { get; set; }
 
         [StringLength(100)]
@@ -23,7 +28,7 @@ namespace Book_Store_Backend.Models
 
         public double? Price { get; set; }
 
-        [StringLength(500)]
+        [StringLength(1000)]
         public string Description { get; set; }
         [DefaultValue(0)]
         public double Position { get; set; }
@@ -39,5 +44,7 @@ namespace Book_Store_Backend.Models
         [ForeignKey("Category")]
         public int? CategoryId { get; set; }
         public virtual Category Category { get; set; }
+        [JsonIgnore]
+        public virtual ICollection<WishList> WishLists { get; set; }
     }
 }

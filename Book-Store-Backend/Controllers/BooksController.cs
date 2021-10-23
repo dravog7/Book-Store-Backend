@@ -17,9 +17,23 @@ namespace Book_Store_Backend.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: api/Books
-        public List<Book> GetBooks()
+        public List<Book> GetBooks([FromUri] int CategoryId = -1,[FromUri] string OrderBy = "Position")
         {
-            return db.Books.ToList();
+            IQueryable<Book> books = db.Books;
+            if(CategoryId != -1)
+            {
+                books = books.Where(x => x.CategoryId == CategoryId);
+            }
+            switch (OrderBy)
+            {
+                case "Position":
+                    books = books.OrderBy(x => x.Position);
+                    break;
+                case "createdAt":
+                    books = books.OrderBy(x => x.createdAt);
+                    break;
+            }
+            return books.ToList();
         }
 
         // GET: api/Books/5

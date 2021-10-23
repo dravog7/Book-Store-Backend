@@ -218,6 +218,7 @@
     <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="Controllers\WishListController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -232,6 +233,10 @@
     <Compile Include="Migrations\202110210947599_book_category.cs" />
     <Compile Include="Migrations\202110210947599_book_category.Designer.cs">
       <DependentUpon>202110210947599_book_category.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202110231352499_wishlist.cs" />
+    <Compile Include="Migrations\202110231352499_wishlist.Designer.cs">
+      <DependentUpon>202110231352499_wishlist.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
@@ -343,6 +348,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202110210947599_book_category.resx">
       <DependentUpon>202110210947599_book_category.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202110231352499_wishlist.resx">
+      <DependentUpon>202110231352499_wishlist.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

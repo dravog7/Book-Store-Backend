@@ -111,7 +111,7 @@ namespace Book_Store_Backend.Migrations
                     Title = "Gone Girl",
                     Position = 1,
                     CategoryId = 1,
-                    Description = "NAMED ONE OF THE MOST INFLUENTIAL BOOKS OF THE DECADE BY CNN • NAMED ONE OF TIME’S TEN BEST FICTION BOOKS OF THE DECADE AND ONE OF ENTERTAINMENT WEEKLY’S BEST BOOKS OF THE DECADE",
+                    Description = "NAMED ONE OF THE MOST INFLUENTIAL BOOKS OF THE DECADE BY CNN NAMED ONE OF TIME’S TEN BEST FICTION BOOKS OF THE DECADE AND ONE OF ENTERTAINMENT WEEKLY’S BEST BOOKS OF THE DECADE",
                 },
                 new Book()
                 {
@@ -152,14 +152,14 @@ namespace Book_Store_Backend.Migrations
                     Position = 1,
                     CategoryId = 6,
                     Description = "Grace Porter goes on a girls’ trip to Vegas to celebrate her hard-earned PhD in astronomy. And while she’s a straitlaced gal who doesn’t get wild, this trip is an exception.",
-                }
+                },
                 new Book()
                 {
                     BookId = 7,
                     Title = "The 19th Christmas",
                     Position = 2,
                     CategoryId = 2,
-                    Description = "As the holidays approach, Detective Lindsay Boxer and her friends in the Women's Murder Club have much to celebrate. Crime is down. The medical examiner's office is quiet. Even the courts are showing some Christmas spirit. And the news cycle is so slow that journalist Cindy Thomas is on assignment to tell a story about the true meaning of the season for San Francisco. Then a fearsome criminal known only as "Loman" seizes control of the headlines. Solving crimes never happens on schedule, but as this criminal mastermind unleashes credible threats by the hour, the month of December is upended for the Women's Murder Club. Avoiding tragedy is the only holiday miracle they seek. ",
+                    Description = "As the holidays approach, Detective Lindsay Boxer and her friends in the Women's Murder Club have much to celebrate. Crime is down. The medical examiner's office is quiet. Even the courts are showing some Christmas spirit. And the news cycle is so slow that journalist Cindy Thomas is on assignment to tell a story about the true meaning of the season for San Francisco. Then a fearsome criminal known only as 'Loman' seizes control of the headlines. Solving crimes never happens on schedule, but as this criminal mastermind unleashes credible threats by the hour, the month of December is upended for the Women's Murder Club. Avoiding tragedy is the only holiday miracle they seek. ",
                 },
                 
                 new Book()
@@ -201,7 +201,7 @@ namespace Book_Store_Backend.Migrations
                     Position = 2,
                     CategoryId = 6,
                     Description = "Reena Manji’s parents are constantly meddling with her life and have been trying to find her a good potential Muslim husband. ",
-                }
+                },
                 new Book()
                 {
                     BookId = 13,
@@ -249,7 +249,7 @@ namespace Book_Store_Backend.Migrations
                     Position = 3,
                     CategoryId = 6,
                     Description = "",
-                }
+                },
                 new Book()
                 {
                     BookId = 19,
@@ -297,7 +297,7 @@ namespace Book_Store_Backend.Migrations
                     Position = 4,
                     CategoryId = 6,
                     Description = "Shay Goldstein loves her job as a producer at her Seattle public radio station. She has been working there for 10 years and can’t imagine working anywhere else.",
-                }
+                },
                 new Book()
                 {
                     BookId = 25,
@@ -345,7 +345,7 @@ namespace Book_Store_Backend.Migrations
                     Position = 5,
                     CategoryId = 6,
                     Description = "Single mom and best-selling erotica writer Eva Mercy unexpectedly meets award-winning novelist Shane Hall at a literary event.",
-                }
+                },
                 new Book()
                 {
                     BookId = 31,
