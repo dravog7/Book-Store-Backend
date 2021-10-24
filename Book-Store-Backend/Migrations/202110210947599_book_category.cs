@@ -12,14 +12,14 @@ namespace Book_Store_Backend.Migrations
                 c => new
                     {
                         BookId = c.Int(nullable: false, identity: true),
-                        Title = c.String(maxLength: 100),
+                        Title = c.String(maxLength: 500),
                         ISBN = c.String(maxLength: 50),
                         Year = c.Int(),
                         Price = c.Double(),
-                        Description = c.String(maxLength: 500),
+                        Description = c.String(maxLength: 2000),
                         Position = c.Double(nullable: false),
                         Status = c.Boolean(nullable: false),
-                        Image = c.String(maxLength: 200),
+                        Image = c.String(maxLength: 300),
                         createdAt = c.DateTime(nullable: false,defaultValueSql:"getutcdate()"),
                         CategoryId = c.Int(),
                     })
@@ -32,9 +32,9 @@ namespace Book_Store_Backend.Migrations
                 c => new
                     {
                         CategoryId = c.Int(nullable: false, identity: true),
-                        CategoryName = c.String(maxLength: 100),
-                        Description = c.String(maxLength: 500),
-                        Image = c.String(maxLength: 200),
+                        CategoryName = c.String(maxLength: 500),
+                        Description = c.String(maxLength: 2000),
+                        Image = c.String(maxLength: 300),
                         Status = c.Boolean(nullable: false),
                         Position = c.Double(nullable: false),
                         CreatedAt = c.DateTime(nullable: false, defaultValueSql: "getutcdate()"),

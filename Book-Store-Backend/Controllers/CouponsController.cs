@@ -12,51 +12,51 @@ using Book_Store_Backend.Models;
 
 namespace Book_Store_Backend.Controllers
 {
-    public class CategoriesController : ApiController
+    public class CouponsController : ApiController
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: api/Categories
-        public List<Category> GetCategories(
-            [FromUri] bool? status = null
-            )
+        // GET: api/Coupons
+        public List<Coupon> GetCoupons([FromUri]string code="")
         {
-            IQueryable<Category> categories = db.Categories;
-            if(status != null)
+            // only allow user to GetCoupons if code is given
+            //only admin may use full list
+            IQueryable<Coupon> coupons = db.Coupons;
+            if(code != "")
             {
-                categories = categories.Where(x => x.Status == status);
+                coupons = coupons.Where(x => x.Code == code);
             }
-            return categories.ToList();
+            return coupons.ToList();
         }
 
-        // GET: api/Categories/5
-        [ResponseType(typeof(Category))]
-        public IHttpActionResult GetCategory(int id)
+        // GET: api/Coupons/5
+        [ResponseType(typeof(Coupon))]
+        public IHttpActionResult GetCoupon(int id)
         {
-            Category category = db.Categories.Find(id);
-            if (category == null)
+            Coupon coupon = db.Coupons.Find(id);
+            if (coupon == null)
             {
                 return NotFound();
             }
 
-            return Ok(category);
+            return Ok(coupon);
         }
 
-        // PUT: api/Categories/5
+        // PUT: api/Coupons/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutCategory(int id, Category category)
+        public IHttpActionResult PutCoupon(int id, Coupon coupon)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != category.CategoryId)
+            if (id != coupon.Id)
             {
                 return BadRequest();
             }
 
-            db.Entry(category).State = System.Data.Entity.EntityState.Modified;
+            db.Entry(coupon).State = System.Data.Entity.EntityState.Modified;
 
             try
             {
@@ -64,7 +64,7 @@ namespace Book_Store_Backend.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!CategoryExists(id))
+                if (!CouponExists(id))
                 {
                     return NotFound();
                 }
@@ -77,35 +77,35 @@ namespace Book_Store_Backend.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/Categories
-        [ResponseType(typeof(Category))]
-        public IHttpActionResult PostCategory(Category category)
+        // POST: api/Coupons
+        [ResponseType(typeof(Coupon))]
+        public IHttpActionResult PostCoupon(Coupon coupon)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.Categories.Add(category);
+            db.Coupons.Add(coupon);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = category.CategoryId }, category);
+            return CreatedAtRoute("DefaultApi", new { id = coupon.Id }, coupon);
         }
 
-        // DELETE: api/Categories/5
-        [ResponseType(typeof(Category))]
-        public IHttpActionResult DeleteCategory(int id)
+        // DELETE: api/Coupons/5
+        [ResponseType(typeof(Coupon))]
+        public IHttpActionResult DeleteCoupon(int id)
         {
-            Category category = db.Categories.Find(id);
-            if (category == null)
+            Coupon coupon = db.Coupons.Find(id);
+            if (coupon == null)
             {
                 return NotFound();
             }
 
-            db.Categories.Remove(category);
+            db.Coupons.Remove(coupon);
             db.SaveChanges();
 
-            return Ok(category);
+            return Ok(coupon);
         }
 
         protected override void Dispose(bool disposing)
@@ -117,9 +117,9 @@ namespace Book_Store_Backend.Controllers
             base.Dispose(disposing);
         }
 
-        private bool CategoryExists(int id)
+        private bool CouponExists(int id)
         {
-            return db.Categories.Count(e => e.CategoryId == id) > 0;
+            return db.Coupons.Count(e => e.Id == id) > 0;
         }
     }
 }

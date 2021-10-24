@@ -1,4 +1,5 @@
-﻿using System.Security.Claims;
+﻿using System.Data.Entity;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -25,14 +26,18 @@ namespace Book_Store_Backend.Models
             : base("DefaultConnection", throwIfV1Schema: false)
         {
         }
-
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
         }
 
-        public System.Data.Entity.DbSet<Book> Books { get; set; }
+        public DbSet<Book> Books { get; set; }
 
-        public System.Data.Entity.DbSet<Category> Categories { get; set; }
+        public DbSet<Category> Categories { get; set; }
+
+        public DbSet<WishList> WishList { get; set; }
+        public DbSet<Coupon> Coupons { get; set; }
+
+        public System.Data.Entity.DbSet<Order> Orders { get; set; }
     }
 }
