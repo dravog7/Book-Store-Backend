@@ -7,6 +7,11 @@ namespace Book_Store_Backend.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using Newtonsoft.Json;
 
+    public class WishListChangeModel
+    {
+        public int BookId;
+    }
+
     [Table("WishList")]
     public class WishList
     {

@@ -47,30 +47,30 @@ namespace Book_Store_Backend.Controllers
         }
 
         [Route("{id}/Add")]
-        [HttpGet]
-        public IHttpActionResult AddBook(int id,[FromUri] int BookId)
+        [HttpPatch]
+        public IHttpActionResult AddBook(int id,[FromBody] WishListChangeModel bookChange)
         {
             WishList wishList = db.WishList.Find(id);
             if (wishList == null)
-                return NotFound();
-            Book book = db.Books.Find(BookId);
+                return BadRequest("Wishlist does not exist :"+id.ToString());
+            Book book = db.Books.Find(bookChange.BookId);
             if (book == null)
-                return NotFound();
+                return BadRequest("Book does not exist :"+ bookChange.BookId.ToString());
             wishList.Books.Add(book);
             db.SaveChanges();
             return Ok();
         }
 
         [Route("{id}/Remove")]
-        [HttpGet]
-        public IHttpActionResult RemoveBook(int id,[FromUri] int BookId)
+        [HttpPatch]
+        public IHttpActionResult RemoveBook(int id,[FromBody] WishListChangeModel bookChange)
         {
             WishList wishList = db.WishList.Find(id);
             if (wishList == null)
-                return NotFound();
-            Book book = db.Books.Find(BookId);
+                return BadRequest("Wishlist does not exist :" + id.ToString());
+            Book book = db.Books.Find(bookChange.BookId);
             if (book == null)
-                return NotFound();
+                return BadRequest("Book does not exist :" + bookChange.BookId.ToString());
             wishList.Books.Remove(book);
             db.SaveChanges();
             return Ok();
@@ -121,7 +121,9 @@ namespace Book_Store_Backend.Controllers
             {
                 return BadRequest(ModelState);
             }
-            wishList.User = UserManager.FindById(User.Identity.GetUserId());
+            ApplicationUser user = UserManager.FindById(User.Identity.GetUserId());
+            wishList.UserId = user.Id;
+            wishList.User = user;
             wishList.Books.Clear();
             db.WishList.Add(wishList);
             db.SaveChanges();

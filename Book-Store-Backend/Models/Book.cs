@@ -15,11 +15,15 @@ namespace Book_Store_Backend.Models
         public Book()
         {
             WishLists = new HashSet<WishList>();
+            Orders = new HashSet<Order>();
         }
         public int BookId { get; set; }
 
-        [StringLength(100)]
+        [StringLength(200)]
         public string Title { get; set; }
+
+        [StringLength(200)]
+        public string Author { get; set; }
 
         [StringLength(50)]
         public string ISBN { get; set; }
@@ -35,6 +39,9 @@ namespace Book_Store_Backend.Models
         [DefaultValue(true)]
         public bool Status { get; set; } = true;
 
+        [DefaultValue(false)]
+        public bool featured { get; set; } = false;
+
         [StringLength(200)]
         public string Image { get; set; }
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
@@ -46,5 +53,7 @@ namespace Book_Store_Backend.Models
         public virtual Category Category { get; set; }
         [JsonIgnore]
         public virtual ICollection<WishList> WishLists { get; set; }
+        [JsonIgnore]
+        public virtual ICollection<Order> Orders { get; set; }
     }
 }

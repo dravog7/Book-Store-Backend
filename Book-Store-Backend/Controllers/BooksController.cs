@@ -17,12 +17,31 @@ namespace Book_Store_Backend.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: api/Books
-        public List<Book> GetBooks([FromUri] int CategoryId = -1,[FromUri] string OrderBy = "Position")
+        public List<Book> GetBooks(
+            [FromUri] int CategoryId = -1,
+            [FromUri] bool? status = null,
+            [FromUri] bool? featured = null,
+            [FromUri] string search = null,
+            [FromUri] string OrderBy = "Position")
         {
             IQueryable<Book> books = db.Books;
             if(CategoryId != -1)
             {
                 books = books.Where(x => x.CategoryId == CategoryId);
+            }
+            if (featured != null)
+            {
+                books = books.Where(x => x.featured == featured);
+            }
+            if (status != null)
+            {
+                books = books.Where(x => x.Status == status);
+            }
+            if(search != null)
+            {
+                books = from m in books where (
+                        m.ISBN.Contains(search) || m.Title.Contains(search) || m.Category.CategoryName.Contains(search) || m.Author.Contains(search)
+                        ) select m;
             }
             switch (OrderBy)
             {
