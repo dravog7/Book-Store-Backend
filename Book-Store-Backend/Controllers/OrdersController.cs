@@ -55,13 +55,6 @@ namespace Book_Store_Backend.Controllers
             Order order = db.Orders.Find(id);
             if (order == null)
                 return BadRequest("Order does not exist :" + id.ToString());
-            if(orderChange.BookId != null)
-            {
-                Book book = db.Books.Find(orderChange.BookId);
-                if (book == null)
-                    return BadRequest("Book does not exist :" + orderChange.BookId.ToString());
-                order.Books.Add(book);
-            }
             if(orderChange.CouponId != null)
             {
                 Coupon coupon = db.Coupons.Find(orderChange.CouponId);
@@ -80,13 +73,6 @@ namespace Book_Store_Backend.Controllers
             Order order = db.Orders.Find(id);
             if (order == null)
                 return BadRequest("Order does not exist :" + id.ToString());
-            if(orderChange.BookId != null)
-            {
-                Book book = db.Books.Find(orderChange.BookId);
-                if (book == null)
-                    return BadRequest("Book does not exist :" + orderChange.BookId.ToString());
-                order.Books.Remove(book);
-            }
             if (orderChange.CouponId != null)
             {
                 Coupon coupon = db.Coupons.Find(orderChange.CouponId);
@@ -145,7 +131,7 @@ namespace Book_Store_Backend.Controllers
             ApplicationUser user = UserManager.FindById(User.Identity.GetUserId());
             order.UserId = user.Id;
             order.User = user;
-            order.Books.Clear();
+            order.BookEntries.Clear();
             order.Coupons.Clear();
             db.Orders.Add(order);
             db.SaveChanges();

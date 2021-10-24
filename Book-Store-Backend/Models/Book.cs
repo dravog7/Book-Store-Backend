@@ -15,7 +15,7 @@ namespace Book_Store_Backend.Models
         public Book()
         {
             WishLists = new HashSet<WishList>();
-            Orders = new HashSet<Order>();
+            OrderEntries = new HashSet<BookEntry>();
         }
         public int BookId { get; set; }
 
@@ -54,6 +54,6 @@ namespace Book_Store_Backend.Models
         [JsonIgnore]
         public virtual ICollection<WishList> WishLists { get; set; }
         [JsonIgnore]
-        public virtual ICollection<Order> Orders { get; set; }
+        public virtual ICollection<BookEntry> OrderEntries { get; set; }
     }
 }

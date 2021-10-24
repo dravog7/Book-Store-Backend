@@ -37,7 +37,7 @@ namespace Book_Store_Backend.Models
 
         public DbSet<WishList> WishList { get; set; }
         public DbSet<Coupon> Coupons { get; set; }
-
-        public System.Data.Entity.DbSet<Order> Orders { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<BookEntry> BookEntries { get; set; }
     }
 }
