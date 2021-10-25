@@ -23,21 +23,23 @@ namespace Book_Store_Backend.Controllers
             UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
         }
 
-        //GET: api/WishList
-        public List<WishList> GetWishLists([FromUri] string userId = "")
-        {
-            IQueryable<WishList> wishList = db.WishList;
-            if(userId != "")
-            {
-                wishList = wishList.Where(x => x.UserId == userId);
-            }
-            return wishList.ToList();
-        }
-        // GET: api/WishList/5
+        ////GET: api/WishList
+        //public List<WishList> GetWishLists([FromUri] string userId = "")
+        //{
+        //    IQueryable<WishList> wishList = db.WishList;
+        //    if(userId != "")
+        //    {
+        //        wishList = wishList.Where(x => x.WishListId == userId);
+        //    }
+        //    return wishList.ToList();
+        //}
+        // GET: api/WishList/
+        [Authorize]
         [ResponseType(typeof(WishList))]
-        public IHttpActionResult GetWishList(int id)
+        public IHttpActionResult GetWishList()
         {
-            WishList wishList = db.WishList.Find(id);
+            ApplicationUser user = UserManager.FindById(User.Identity.GetUserId());
+            WishList wishList = db.WishList.Find(user.Id);
             if (wishList == null)
             {
                 return NotFound();
@@ -45,14 +47,15 @@ namespace Book_Store_Backend.Controllers
 
             return Ok(wishList);
         }
-
-        [Route("{id}/Add")]
+        [Authorize]
+        [Route("Add")]
         [HttpPatch]
-        public IHttpActionResult AddBook(int id,[FromBody] WishListChangeModel bookChange)
+        public IHttpActionResult AddBook([FromBody] WishListChangeModel bookChange)
         {
-            WishList wishList = db.WishList.Find(id);
+            ApplicationUser user = UserManager.FindById(User.Identity.GetUserId());
+            WishList wishList = GetOrCreateWishList(user);
             if (wishList == null)
-                return BadRequest("Wishlist does not exist :"+id.ToString());
+                return BadRequest("Wishlist does not exist :"+user.Id);
             Book book = db.Books.Find(bookChange.BookId);
             if (book == null)
                 return BadRequest("Book does not exist :"+ bookChange.BookId.ToString());
@@ -60,14 +63,15 @@ namespace Book_Store_Backend.Controllers
             db.SaveChanges();
             return Ok();
         }
-
-        [Route("{id}/Remove")]
+        [Authorize]
+        [Route("Remove")]
         [HttpPatch]
-        public IHttpActionResult RemoveBook(int id,[FromBody] WishListChangeModel bookChange)
+        public IHttpActionResult RemoveBook([FromBody] WishListChangeModel bookChange)
         {
-            WishList wishList = db.WishList.Find(id);
+            ApplicationUser user = UserManager.FindById(User.Identity.GetUserId());
+            WishList wishList = GetOrCreateWishList(user);
             if (wishList == null)
-                return BadRequest("Wishlist does not exist :" + id.ToString());
+                return BadRequest("Wishlist does not exist :" + user.Id);
             Book book = db.Books.Find(bookChange.BookId);
             if (book == null)
                 return BadRequest("Book does not exist :" + bookChange.BookId.ToString());
@@ -76,76 +80,76 @@ namespace Book_Store_Backend.Controllers
             return Ok();
         }
 
-        // PUT: api/WishList/5
-        // TODO - allow only some fields to be edited
-        [ResponseType(typeof(void))]
-        public IHttpActionResult PutWishList(int id, WishList wishList)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+        //// PUT: api/WishList/5
+        //// TODO - allow only some fields to be edited
+        //[ResponseType(typeof(void))]
+        //public IHttpActionResult PutWishList(string id, WishList wishList)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
 
-            if (id != wishList.WishListId)
-            {
-                return BadRequest();
-            }
+        //    if (id != wishList.WishListId)
+        //    {
+        //        return BadRequest();
+        //    }
 
-            db.Entry(wishList).State = System.Data.Entity.EntityState.Modified;
+        //    db.Entry(wishList).State = System.Data.Entity.EntityState.Modified;
 
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!WishListExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+        //    try
+        //    {
+        //        db.SaveChanges();
+        //    }
+        //    catch (DbUpdateConcurrencyException)
+        //    {
+        //        if (!WishListExists(id))
+        //        {
+        //            return NotFound();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
 
-            return StatusCode(HttpStatusCode.NoContent);
-        }
+        //    return StatusCode(HttpStatusCode.NoContent);
+        //}
 
-        // POST: api/WishList
-        [Authorize]
-        [ResponseType(typeof(WishList))]
-        public IHttpActionResult PostWishList(WishList wishList)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            ApplicationUser user = UserManager.FindById(User.Identity.GetUserId());
-            wishList.UserId = user.Id;
-            wishList.User = user;
-            wishList.Books.Clear();
-            db.WishList.Add(wishList);
-            db.SaveChanges();
+        //// POST: api/WishList
+        //[Authorize]
+        //[ResponseType(typeof(WishList))]
+        //public IHttpActionResult PostWishList(WishList wishList)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
+        //    ApplicationUser user = UserManager.FindById(User.Identity.GetUserId());
+        //    wishList.WishListId = user.Id;
+        //    wishList.User = user;
+        //    wishList.Books.Clear();
+        //    db.WishList.Add(wishList);
+        //    db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = wishList.WishListId }, wishList);
-        }
+        //    return CreatedAtRoute("DefaultApi", new { id = wishList.WishListId }, wishList);
+        //}
 
-        // DELETE: api/WishList/5
-        [ResponseType(typeof(WishList))]
-        public IHttpActionResult DeleteWishList(int id)
-        {
-            WishList wishList = db.WishList.Find(id);
-            if (wishList == null)
-            {
-                return NotFound();
-            }
+        //// DELETE: api/WishList/5
+        //[ResponseType(typeof(WishList))]
+        //public IHttpActionResult DeleteWishList(int id)
+        //{
+        //    WishList wishList = db.WishList.Find(id);
+        //    if (wishList == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            db.WishList.Remove(wishList);
-            db.SaveChanges();
+        //    db.WishList.Remove(wishList);
+        //    db.SaveChanges();
 
-            return Ok(wishList);
-        }
+        //    return Ok(wishList);
+        //}
 
         protected override void Dispose(bool disposing)
         {
@@ -156,9 +160,21 @@ namespace Book_Store_Backend.Controllers
             base.Dispose(disposing);
         }
 
-        private bool WishListExists(int id)
+        private bool WishListExists(string id)
         {
             return db.WishList.Count(e => e.WishListId == id) > 0;
+        }
+
+        private WishList GetOrCreateWishList(ApplicationUser user)
+        {
+            if (!WishListExists(user.Id))
+            {
+                WishList wishList = new WishList { WishListId = user.Id };
+                db.WishList.Add(wishList);
+                db.SaveChanges();
+                return wishList;
+            }
+            return db.WishList.Find(user.Id);
         }
     }
 }

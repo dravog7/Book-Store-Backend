@@ -225,37 +225,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202110190649411_Identity.cs" />
-    <Compile Include="Migrations\202110190649411_Identity.Designer.cs">
-      <DependentUpon>202110190649411_Identity.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202110191617379_userIsActive.cs" />
-    <Compile Include="Migrations\202110191617379_userIsActive.Designer.cs">
-      <DependentUpon>202110191617379_userIsActive.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202110210947599_book_category.cs" />
-    <Compile Include="Migrations\202110210947599_book_category.Designer.cs">
-      <DependentUpon>202110210947599_book_category.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202110231352499_wishlist.cs" />
-    <Compile Include="Migrations\202110231352499_wishlist.Designer.cs">
-      <DependentUpon>202110231352499_wishlist.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202110240558593_Coupon.cs" />
-    <Compile Include="Migrations\202110240558593_Coupon.Designer.cs">
-      <DependentUpon>202110240558593_Coupon.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202110240650291_Orders.cs" />
-    <Compile Include="Migrations\202110240650291_Orders.Designer.cs">
-      <DependentUpon>202110240650291_Orders.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202110240754460_Updates.cs" />
-    <Compile Include="Migrations\202110240754460_Updates.Designer.cs">
-      <DependentUpon>202110240754460_Updates.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202110240918208_order-book-entry.cs" />
-    <Compile Include="Migrations\202110240918208_order-book-entry.Designer.cs">
-      <DependentUpon>202110240918208_order-book-entry.cs</DependentUpon>
+    <Compile Include="Migrations\202110241551363_initial.cs" />
+    <Compile Include="Migrations\202110241551363_initial.Designer.cs">
+      <DependentUpon>202110241551363_initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
@@ -361,33 +333,12 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202110190649411_Identity.resx">
-      <DependentUpon>202110190649411_Identity.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202110191617379_userIsActive.resx">
-      <DependentUpon>202110191617379_userIsActive.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202110210947599_book_category.resx">
-      <DependentUpon>202110210947599_book_category.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202110231352499_wishlist.resx">
-      <DependentUpon>202110231352499_wishlist.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202110240558593_Coupon.resx">
-      <DependentUpon>202110240558593_Coupon.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202110240650291_Orders.resx">
-      <DependentUpon>202110240650291_Orders.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202110240754460_Updates.resx">
-      <DependentUpon>202110240754460_Updates.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202110240918208_order-book-entry.resx">
-      <DependentUpon>202110240918208_order-book-entry.cs</DependentUpon>
-    </EmbeddedResource>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+    <EmbeddedResource Include="Migrations\202110241551363_initial.resx">
+      <DependentUpon>202110241551363_initial.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

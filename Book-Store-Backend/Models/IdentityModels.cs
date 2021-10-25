@@ -11,6 +11,7 @@ namespace Book_Store_Backend.Models
     public class ApplicationUser : IdentityUser
     {
         public bool isActive { get; set; } = true;
+        public virtual WishList WishList { get; set; }
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager, string authenticationType)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
