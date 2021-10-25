@@ -171,7 +171,6 @@ namespace Book_Store_Backend.Controllers
             {
                 WishList wishList = new WishList { WishListId = user.Id };
                 db.WishList.Add(wishList);
-                db.SaveChanges();
                 return wishList;
             }
             return db.WishList.Find(user.Id);

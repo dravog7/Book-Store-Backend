@@ -16,9 +16,15 @@ namespace Book_Store_Backend.Models
         CANCELLED
     }
 
-    public class OrderChangeModel
+    public class OrderCouponModel
     {
         public int? CouponId;
+    }
+
+    public class OrderChangeModel
+    {
+        public OrderStatus? status;
+        public string address;
     }
 
     public class Order
@@ -33,10 +39,10 @@ namespace Book_Store_Backend.Models
         [ForeignKey("User")]
         public string UserId { get; set; }
         [JsonIgnore]
-        public ApplicationUser User { get; set; }
+        public virtual ApplicationUser User { get; set; }
         public virtual ICollection<BookEntry> BookEntries { get; set; }
         public virtual ICollection<Coupon> Coupons { get; set; }
-        public OrderStatus status { get; set; }
+        public OrderStatus status { get; set; } = OrderStatus.IN_PROGRESS;
         [StringLength(2000)]
         public string address { get; set; }
         public float price { get; set; }

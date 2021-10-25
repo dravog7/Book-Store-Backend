@@ -50,7 +50,7 @@ namespace Book_Store_Backend.Controllers
   
         [Route("{id}/Add")]
         [HttpPatch]
-        public IHttpActionResult AddBook(int id, [FromBody] OrderChangeModel orderChange)
+        public IHttpActionResult AddCoupon(int id, [FromBody] OrderCouponModel orderChange)
         {
             Order order = db.Orders.Find(id);
             if (order == null)
@@ -68,7 +68,7 @@ namespace Book_Store_Backend.Controllers
 
         [Route("{id}/Remove")]
         [HttpPatch]
-        public IHttpActionResult RemoveBook(int id, [FromBody] OrderChangeModel orderChange)
+        public IHttpActionResult RemoveCoupon(int id, [FromBody] OrderCouponModel orderChange)
         {
             Order order = db.Orders.Find(id);
             if (order == null)
@@ -84,51 +84,81 @@ namespace Book_Store_Backend.Controllers
             return Ok();
         }
 
-        // PUT: api/Orders/5
-        [ResponseType(typeof(void))]
-        public IHttpActionResult PutOrder(int id, Order order)
+        [ResponseType(typeof(string))]
+        [Route("{id}")]
+        [HttpPatch]
+        public IHttpActionResult patchOrder(int id,[FromBody] OrderChangeModel orderChange)
         {
-            if (!ModelState.IsValid)
+            Order order = db.Orders.Find(id);
+            if (orderChange.status != null)
             {
-                return BadRequest(ModelState);
+                if (order.status > orderChange.status)
+                    return BadRequest("cannot change status to lesser than current");
+                order.status = orderChange.status??order.status;
             }
-
-            if (id != order.OrderId)
+            if(orderChange.address != null)
             {
-                return BadRequest();
+                order.address = orderChange.address;
             }
-
-            db.Entry(order).State = System.Data.Entity.EntityState.Modified;
-
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!OrderExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return StatusCode(HttpStatusCode.NoContent);
+            db.SaveChanges();
+            return Ok();
         }
+        //// PUT: api/Orders/5
+        //[ResponseType(typeof(void))]
+        //public IHttpActionResult PutOrder(int id, Order order)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
+
+        //    if (id != order.OrderId)
+        //    {
+        //        return BadRequest();
+        //    }
+
+        //    db.Entry(order).State = System.Data.Entity.EntityState.Modified;
+
+        //    try
+        //    {
+        //        db.SaveChanges();
+        //    }
+        //    catch (DbUpdateConcurrencyException)
+        //    {
+        //        if (!OrderExists(id))
+        //        {
+        //            return NotFound();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
+
+        //    return StatusCode(HttpStatusCode.NoContent);
+        //}
 
         // POST: api/Orders
         [Authorize]
         [ResponseType(typeof(Order))]
-        public IHttpActionResult PostOrder(Order order)
+        public IHttpActionResult PostOrder()
         {
+            Order order = new Order();
+            ApplicationUser user = UserManager.FindById(User.Identity.GetUserId());
+            try
+            {
+                order = (from x in db.Orders where x.UserId == user.Id && x.status == OrderStatus.IN_PROGRESS select x).First();
+                return Ok(order);
+            }
+            catch (InvalidOperationException)
+            {
+                ;
+            }
+            
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            ApplicationUser user = UserManager.FindById(User.Identity.GetUserId());
             order.UserId = user.Id;
             order.User = user;
             order.BookEntries.Clear();

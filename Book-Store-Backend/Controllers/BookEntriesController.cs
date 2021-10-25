@@ -12,12 +12,12 @@ using Book_Store_Backend.Models;
 
 namespace Book_Store_Backend.Controllers
 {
-    [RoutePrefix("api/BookEntries")]
+    [RoutePrefix("api/Cart")]
     public class BookEntriesController : ApiController
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: api/BookEntries
+        // GET: api/Cart
         public IQueryable<BookEntry> GetBookEntries([FromUri] int? OrderId = null)
         {
             IQueryable<BookEntry> bookEntries = db.BookEntries;
@@ -28,7 +28,7 @@ namespace Book_Store_Backend.Controllers
             return bookEntries;
         }
 
-        // GET: api/BookEntries/5
+        // GET: api/Cart/5
         [ResponseType(typeof(BookEntry))]
         public IHttpActionResult GetBookEntry(int id)
         {
@@ -41,7 +41,7 @@ namespace Book_Store_Backend.Controllers
             return Ok(bookEntry);
         }
 
-        // PUT: api/BookEntries/5
+        // PUT: api/Cart/5/1
         [ResponseType(typeof(void))]
         [Route("{OrderId}/{BookId}")]
         [HttpPut]
@@ -78,7 +78,7 @@ namespace Book_Store_Backend.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/BookEntries
+        // POST: api/Cart
         [ResponseType(typeof(BookEntry))]
         public IHttpActionResult PostBookEntry(BookEntry bookEntry)
         {
@@ -108,7 +108,7 @@ namespace Book_Store_Backend.Controllers
             return CreatedAtRoute("DefaultApi", new { id = bookEntry.BookId }, bookEntry);
         }
 
-        // DELETE: api/BookEntries/5
+        // DELETE: api/Cart/5/1
         [ResponseType(typeof(BookEntry))]
         [Route("{OrderId}/{BookId}")]
         [HttpDelete]
