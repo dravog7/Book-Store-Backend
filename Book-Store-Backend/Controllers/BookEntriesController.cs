@@ -80,6 +80,8 @@ namespace Book_Store_Backend.Controllers
 
         // POST: api/Cart
         [ResponseType(typeof(BookEntry))]
+        [Route("")]
+        [HttpPost]
         public IHttpActionResult PostBookEntry(BookEntry bookEntry)
         {
             if (!ModelState.IsValid)
@@ -105,7 +107,7 @@ namespace Book_Store_Backend.Controllers
                 }
             }
 
-            return CreatedAtRoute("DefaultApi", new { id = bookEntry.BookId }, bookEntry);
+            return Ok(bookEntry);
         }
 
         // DELETE: api/Cart/5/1
