@@ -25,6 +25,7 @@ namespace Book_Store_Backend.Models
     {
         public OrderStatus? status;
         public string address;
+        public int? couponId;
     }
 
     public class Order
@@ -32,7 +33,6 @@ namespace Book_Store_Backend.Models
         public Order()
         {
             BookEntries = new HashSet<BookEntry>();
-            Coupons = new HashSet<Coupon>();
         }
         public int OrderId { get; set; }
 
@@ -41,11 +41,25 @@ namespace Book_Store_Backend.Models
         [JsonIgnore]
         public virtual ApplicationUser User { get; set; }
         public virtual ICollection<BookEntry> BookEntries { get; set; }
-        public virtual ICollection<Coupon> Coupons { get; set; }
+
+        [ForeignKey("Coupon")]
+        public int? CouponId { get; set; }
+        public virtual Coupon Coupon { get; set; }
         public OrderStatus status { get; set; } = OrderStatus.IN_PROGRESS;
         [StringLength(2000)]
         public string address { get; set; }
-        public float price { get; set; }
+        public double price { get; set; }
+
+        public void setTotalPrice()
+        {
+            double totalPrice = 0;
+            foreach(var bookEntry in this.BookEntries)
+            {
+                totalPrice += bookEntry.quantity * bookEntry.Book.Price??0;
+            }
+            totalPrice -= Math.Min(totalPrice * Coupon.Discount / 100, Coupon.MaxDiscount);
+            this.price = totalPrice;
+        }
     }
 
     public class BookEntry

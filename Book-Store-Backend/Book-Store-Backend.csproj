@@ -226,9 +226,17 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202110241551363_initial.cs" />
-    <Compile Include="Migrations\202110241551363_initial.Designer.cs">
-      <DependentUpon>202110241551363_initial.cs</DependentUpon>
+    <Compile Include="Migrations\202110310656430_initial.cs" />
+    <Compile Include="Migrations\202110310656430_initial.Designer.cs">
+      <DependentUpon>202110310656430_initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202110311143106_couponDiscount.cs" />
+    <Compile Include="Migrations\202110311143106_couponDiscount.Designer.cs">
+      <DependentUpon>202110311143106_couponDiscount.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202110311449263_priceType.cs" />
+    <Compile Include="Migrations\202110311449263_priceType.Designer.cs">
+      <DependentUpon>202110311449263_priceType.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
@@ -338,8 +346,14 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202110241551363_initial.resx">
-      <DependentUpon>202110241551363_initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202110310656430_initial.resx">
+      <DependentUpon>202110310656430_initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202110311143106_couponDiscount.resx">
+      <DependentUpon>202110311143106_couponDiscount.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202110311449263_priceType.resx">
+      <DependentUpon>202110311449263_priceType.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

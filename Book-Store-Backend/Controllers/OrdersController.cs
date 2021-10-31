@@ -47,42 +47,6 @@ namespace Book_Store_Backend.Controllers
 
             return Ok(order);
         }
-  
-        [Route("{id}/Add")]
-        [HttpPatch]
-        public IHttpActionResult AddCoupon(int id, [FromBody] OrderCouponModel orderChange)
-        {
-            Order order = db.Orders.Find(id);
-            if (order == null)
-                return BadRequest("Order does not exist :" + id.ToString());
-            if(orderChange.CouponId != null)
-            {
-                Coupon coupon = db.Coupons.Find(orderChange.CouponId);
-                if (coupon == null)
-                    return BadRequest("Coupon does not exist :" + orderChange.CouponId.ToString());
-                order.Coupons.Add(coupon);
-            }
-            db.SaveChanges();
-            return Ok();
-        }
-
-        [Route("{id}/Remove")]
-        [HttpPatch]
-        public IHttpActionResult RemoveCoupon(int id, [FromBody] OrderCouponModel orderChange)
-        {
-            Order order = db.Orders.Find(id);
-            if (order == null)
-                return BadRequest("Order does not exist :" + id.ToString());
-            if (orderChange.CouponId != null)
-            {
-                Coupon coupon = db.Coupons.Find(orderChange.CouponId);
-                if (coupon == null)
-                    return BadRequest("Coupon does not exist :" + orderChange.CouponId.ToString());
-                order.Coupons.Remove(coupon);
-            }
-            db.SaveChanges();
-            return Ok();
-        }
 
         [ResponseType(typeof(string))]
         [Route("{id}")]
@@ -95,10 +59,19 @@ namespace Book_Store_Backend.Controllers
                 if (order.status > orderChange.status)
                     return BadRequest("cannot change status to lesser than current");
                 order.status = orderChange.status??order.status;
+                if (order.status == OrderStatus.PLACED)
+                    order.setTotalPrice();
             }
             if(orderChange.address != null)
             {
                 order.address = orderChange.address;
+            }
+            if(orderChange.couponId != null)
+            {
+                if (orderChange.couponId == 0)
+                    order.CouponId = null;
+                else
+                    order.CouponId = orderChange.couponId;
             }
             db.SaveChanges();
             return Ok();
@@ -162,7 +135,6 @@ namespace Book_Store_Backend.Controllers
             order.UserId = user.Id;
             order.User = user;
             order.BookEntries.Clear();
-            order.Coupons.Clear();
             db.Orders.Add(order);
             db.SaveChanges();
 

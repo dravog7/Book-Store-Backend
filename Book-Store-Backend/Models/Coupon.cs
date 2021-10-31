@@ -21,6 +21,10 @@ namespace Book_Store_Backend.Models
         [StringLength(100)]
         public string Code { get; set; }
 
+        public float Discount { get; set; }
+
+        public float MaxDiscount { get; set; }
+
         [JsonIgnore]
         public virtual ICollection<Order> Orders { get; set; }
     }

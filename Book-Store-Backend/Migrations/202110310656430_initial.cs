@@ -40,7 +40,7 @@ namespace Book_Store_Backend.Migrations
                         CategoryId = c.Int(),
                     })
                 .PrimaryKey(t => t.BookId)
-                .ForeignKey("dbo.Category", t => t.CategoryId)
+                .ForeignKey("dbo.Category", t => t.CategoryId, cascadeDelete: true)
                 .Index(t => t.CategoryId);
             
             CreateTable(
@@ -133,13 +133,16 @@ namespace Book_Store_Backend.Migrations
                     {
                         OrderId = c.Int(nullable: false, identity: true),
                         UserId = c.String(maxLength: 128),
+                        CouponId = c.Int(),
                         status = c.Int(nullable: false),
                         address = c.String(maxLength: 2000),
                         price = c.Single(nullable: false),
                     })
                 .PrimaryKey(t => t.OrderId)
+                .ForeignKey("dbo.Coupon", t => t.CouponId)
                 .ForeignKey("dbo.AspNetUsers", t => t.UserId)
-                .Index(t => t.UserId);
+                .Index(t => t.UserId)
+                .Index(t => t.CouponId);
             
             CreateTable(
                 "dbo.Coupon",
@@ -174,27 +177,13 @@ namespace Book_Store_Backend.Migrations
                 .Index(t => t.WishList_WishListId)
                 .Index(t => t.Book_BookId);
             
-            CreateTable(
-                "dbo.CouponOrders",
-                c => new
-                    {
-                        Coupon_Id = c.Int(nullable: false),
-                        Order_OrderId = c.Int(nullable: false),
-                    })
-                .PrimaryKey(t => new { t.Coupon_Id, t.Order_OrderId })
-                .ForeignKey("dbo.Coupon", t => t.Coupon_Id, cascadeDelete: true)
-                .ForeignKey("dbo.Orders", t => t.Order_OrderId, cascadeDelete: true)
-                .Index(t => t.Coupon_Id)
-                .Index(t => t.Order_OrderId);
-            
         }
         
         public override void Down()
         {
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
             DropForeignKey("dbo.Orders", "UserId", "dbo.AspNetUsers");
-            DropForeignKey("dbo.CouponOrders", "Order_OrderId", "dbo.Orders");
-            DropForeignKey("dbo.CouponOrders", "Coupon_Id", "dbo.Coupon");
+            DropForeignKey("dbo.Orders", "CouponId", "dbo.Coupon");
             DropForeignKey("dbo.BookEntries", "OrderId", "dbo.Orders");
             DropForeignKey("dbo.WishList", "WishListId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserRoles", "UserId", "dbo.AspNetUsers");
@@ -204,11 +193,10 @@ namespace Book_Store_Backend.Migrations
             DropForeignKey("dbo.WishListBooks", "WishList_WishListId", "dbo.WishList");
             DropForeignKey("dbo.BookEntries", "BookId", "dbo.Book");
             DropForeignKey("dbo.Book", "CategoryId", "dbo.Category");
-            DropIndex("dbo.CouponOrders", new[] { "Order_OrderId" });
-            DropIndex("dbo.CouponOrders", new[] { "Coupon_Id" });
             DropIndex("dbo.WishListBooks", new[] { "Book_BookId" });
             DropIndex("dbo.WishListBooks", new[] { "WishList_WishListId" });
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
+            DropIndex("dbo.Orders", new[] { "CouponId" });
             DropIndex("dbo.Orders", new[] { "UserId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
@@ -219,7 +207,6 @@ namespace Book_Store_Backend.Migrations
             DropIndex("dbo.Book", new[] { "CategoryId" });
             DropIndex("dbo.BookEntries", new[] { "OrderId" });
             DropIndex("dbo.BookEntries", new[] { "BookId" });
-            DropTable("dbo.CouponOrders");
             DropTable("dbo.WishListBooks");
             DropTable("dbo.AspNetRoles");
             DropTable("dbo.Coupon");
